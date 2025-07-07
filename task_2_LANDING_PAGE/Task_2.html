@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Watch Pro</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      color: #333;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Navbar styling */
+    header {
+      background: transparent;
+      color: #fff;
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: background 0.4s ease, padding 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header.scrolled {
+      background: linear-gradient(90deg, #4b6cb7, #182848);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      padding: 10px 20px;
+    }
+
+    header h1 {
+      margin: 0 20px;
+      font-size: clamp(24px, 5vw, 30px);
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: clamp(14px, 4vw, 16px);
+      transition: color 0.3s, transform 0.3s;
+      padding-bottom: 4px;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+      transform: translateY(-2px);
+    }
+
+    /* Hamburger menu */
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #fff;
+      transition: transform 0.3s;
+    }
+
+    .menu-toggle:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 100px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 80px;
+      background: radial-gradient(circle at top left, #f0f4f8, #ffffff);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(75, 108, 183, 0.1), rgba(24, 40, 72, 0.1));
+      animation: subtleMove 10s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes subtleMove {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(20px, 20px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      padding: 20px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-text h2 {
+      font-size: clamp(32px, 6vw, 48px);
+      color: #4b6cb7;
+      margin: 0 0 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-text p {
+      font-size: clamp(16px, 3vw, 18px);
+      margin-bottom: 30px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .hero-text button {
+      background: linear-gradient(45deg, #4b6cb7, #182848);
+      color: #fff;
+      border: none;
+      padding: 15px 40px;
+      font-size: clamp(14px, 3vw, 16px);
+      cursor: pointer;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      animation: fadeInUp 1.4s ease-out;
+    }
+
+    .hero-text button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      background: linear-gradient(45deg, #5a7ed4, #2a3b6a);
+    }
+
+    .hero-img {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-img img {
+      max-width: clamp(240px, 40vw, 400px);
+      width: 85%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: transform 0.3s, filter 0.3s;
+    }
+
+    .hero-img img:hover {
+      transform: scale(1.08);
+      filter: brightness(1.1);
+    }
+
+    /* Color Selector */
+    .color-selector {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .color-option {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.3s, transform 0.3s;
+    }
+
+    .color-option:hover, .color-option.selected {
+      border: 2px solid #ffcc00;
+      transform: scale(1.2);
+    }
+
+    /* Features Section */
+    section {
+      padding: clamp(60px, 10vw, 80px) 20px;
+      text-align: center;
+    }
+
+    .features h3, .pricing h3, .faq h3, .cta h3, .testimonials h3 {
+      font-size: clamp(28px, 5vw, 36px);
+      margin-bottom: 50px;
+      color: #182848;
+      position: relative;
+    }
+
+    .features h3::after, .pricing h3::after, .faq h3::after, .testimonials h3::after {
+      content: '';
+      width: 80px;
+      height: 4px;
+      background: #4b6cb7;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .feature-list, .pricing-plans, .faq-list, .testimonial-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: clamp(20px, 5vw, 30px);
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature, .plan, .faq-item, .testimonial {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(12px);
+      padding: clamp(20px, 5vw, 30px);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature:hover, .plan:hover, .faq-item:hover, .testimonial:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .feature-icon {
+      font-size: clamp(40px, 8vw, 48px);
+      margin-bottom: 20px;
+      color: #4b6cb7;
+      transition: transform 0.3s;
+    }
+
+    .feature:hover .feature-icon {
+      transform: scale(1.2);
+    }
+
+    .feature h4, .plan h4, .faq-item h4 {
+      font-size: clamp(18px, 4vw, 22px);
+      color: #182848;
+      margin-bottom: 12px;
+    }
+
+    .feature p, .plan ul li, .faq-item p, .testimonial p {
+      font-size: clamp(13px, 3vw, 15px);
+      line-height: 1.6;
+    }
+
+    .plan p {
+      font-size: clamp(16px, 3vw, 18px);
+      margin-bottom: 20px;
+      color: #4b6cb7;
+    }
+
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .plan button {
+      background: linear-gradient(45deg, #4b6cb7, #182848);
+      color: #fff;
+      border: none;
+      padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 30px);
+      border-radius: 25px;
+      font-size: clamp(13px, 3vw, 15px);
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .plan button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #5a7ed4, #2a3b6a);
+    }
+
+    /* FAQ Section */
+    .faq {
+      background: #f9fafc;
+    }
+
+    .faq-item {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .faq-item p {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .faq-item.active p {
+      display: block;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Pricing Section */
+    .pricing {
+      background: #f9fafc;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      background: linear-gradient(135deg, #e0eafc, #ffffff);
+    }
+
+    .testimonial h4 {
+      font-size: clamp(16px, 3vw, 18px);
+      color: #4b6cb7;
+      margin-top: 15px;
+    }
+
+    /* Call to Action */
+    .cta {
+      background: linear-gradient(90deg, #4b6cb7, #182848);
+      color: #fff;
+      padding: clamp(40px, 8vw, 60px) 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent);
+      z-index: 0;
+    }
+
+    .cta h3, .cta button {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta button {
+      background: #ffcc00;
+      color: #182848;
+      border: none;
+      padding: clamp(12px, 3vw, 15px) clamp(30px, 5vw, 40px);
+      font-size: clamp(14px, 3vw, 16px);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .cta button:hover {
+      transform: scale(1.1);
+      background: #ffd700;
+    }
+
+    /* Footer */
+    footer {
+      background: #182848;
+      color: #fff;
+      text-align: center;
+      padding: clamp(30px, 6vw, 40px) 20px;
+      margin-top: 50px;
+    }
+
+    footer .socials a {
+      margin: 0 15px;
+      font-size: clamp(20px, 5vw, 24px);
+      color: #fff;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    footer .socials a:hover {
+      transform: scale(1.3);
+      color: #ffcc00;
+    }
+
+    /* Enhanced Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-text h2 {
+        font-size: clamp(28px, 5vw, 36px);
+      }
+
+      .hero-img img {
+        max-width: clamp(200px, 35vw, 320px);
+      }
+
+      .feature-list, .pricing-plans, .faq-list, .testimonial-list {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: clamp(15px, 4vw, 25px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #182848;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        padding: 20px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a {
+        margin: 10px 0;
+        font-size: clamp(16px, 4vw, 18px);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero {
+        flex-direction: column;
+        padding-top: clamp(60px, 10vw, 80px);
+      }
+
+      .hero-text, .hero-img {
+        min-width: 100%;
+        padding: 15px;
+      }
+
+      .hero-text h2 {
+        font-size: clamp(24px, 5vw, 32px);
+      }
+
+      .hero-img img {
+        max-width: clamp(180px, 30vw, 280px);
+      }
+
+      .features h3, .pricing h3, .faq h3, .testimonials h3, .cta h3 {
+        font-size: clamp(24px, 5vw, 28px);
+      }
+
+      .color-selector {
+        gap: 10px;
+      }
+
+      .color-option {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: clamp(20px, 5vw, 24px);
+      }
+
+      .hero-text h2 {
+        font-size: clamp(22px, 5vw, 28px);
+      }
+
+      .hero-text p {
+        font-size: clamp(14px, 3vw, 16px);
+      }
+
+      .hero-img img {
+        max-width: clamp(160px, 25vw, 240px);
+      }
+
+      .feature, .plan, .faq-item, .testimonial {
+        padding: clamp(15px, 4vw, 20px);
+      }
+
+      .feature h4, .plan h4, .faq-item h4 {
+        font-size: clamp(16px, 4vw, 20px);
+      }
+
+      .feature p, .plan ul li, .faq-item p, .testimonial p {
+        font-size: clamp(12px, 3vw, 14px);
+      }
+
+      .cta button {
+        padding: clamp(10px, 2vw, 12px) clamp(25px, 4vw, 30px);
+        font-size: clamp(12px, 3vw, 14px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="navbar">
+    <h1>Smart Watch Pro</h1>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <nav id="nav-links">
+      <a href="#">Home</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Smart Watch Pro</h2>
+      <p>Your ultimate fitness companion with advanced health tracking, customizable watch faces, waterproof design, and seamless connectivity.</p>
+      <button id="buy-now">Buy Now</button>
+    </div>
+    <div class="hero-img">
+      <img id="watch-image" src="watch_image.jpg" alt="Smartwatch Image">
+      <div class="color-selector">
+        <div class="color-option" style="background: #000;" data-color="watch_image.jpg"></div>
+        <div class="color-option" style="background: #c0c0c0;" data-color="watch_image.jpg"></div>
+        <div class="color-option" style="background: #ffd700;" data-color="watch_image.jpg"></div>
+        <div class="color-option" style="background: #ff0000;" data-color="watch_image.jpg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h3>Advanced Features</h3>
+    <div class="feature-list">
+      <div class="feature"><div class="feature-icon">❤️</div><h4>Heart Rate Monitor</h4><p>Real-time heart rate tracking with alerts for irregular rhythms.</p></div>
+      <div class="feature"><div class="feature-icon">💤</div><h4>Sleep Analysis</h4><p>Advanced sleep tracking with REM cycle analysis.</p></div>
+      <div class="feature"><div class="feature-icon">📍</div><h4>Built-in GPS</h4><p>Precise location tracking for runs and outdoor adventures.</p></div>
+      <div class="feature"><div class="feature-icon">🏃‍♂️</div><h4>Activity Tracking</h4><p>Monitor steps, calories, and distance with personalized goals.</p></div>
+      <div class="feature"><div class="feature-icon">🔗</div><h4>Bluetooth 5.0</h4><p>Fast and stable connectivity with your devices.</p></div>
+      <div class="feature"><div class="feature-icon">💧</div><h4>IP68 Waterproof</h4><p>Swim-proof up to 50 meters with water lock mode.</p></div>
+      <div class="feature"><div class="feature-icon">⌚</div><h4>Custom Watch Faces</h4><p>Personalize with thousands of downloadable watch faces.</p></div>
+      <div class="feature"><div class="feature-icon">📱</div><h4>Smart Notifications</h4><p>Receive calls, texts, and app alerts on your wrist.</p></div>
+      <div class="feature"><div class="feature-icon">🔋</div><h4>10-Day Battery</h4><p>Long-lasting battery with fast wireless charging.</p></div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq" id="faq">
+    <h3>Frequently Asked Questions</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>What is the battery life of the Smart Watch Pro?</h4>
+        <p>The Smart Watch Pro offers up to 10 days of battery life with regular use and supports fast wireless charging.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is the Smart Watch Pro waterproof?</h4>
+        <p>Yes, it is IP68 waterproof, suitable for swimming up to 50 meters with a water lock mode for added protection.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I customize the watch face?</h4>
+        <p>Absolutely! You can choose from thousands of downloadable watch faces to personalize your Smart Watch Pro.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Does it support notifications from my phone?</h4>
+        <p>Yes, the Smart Watch Pro supports smart notifications for calls, texts, and app alerts directly on your wrist.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing" id="pricing">
+    <h3>Pricing Plans</h3>
+    <div class="pricing-plans">
+      <div class="plan"><h4>Basic</h4><p>$99</p><ul><li>Heart Rate Monitor</li><li>IP68 Waterproof</li><li>Smart Notifications</li></ul><button>Select</button></div>
+      <div class="plan"><h4>Standard</h4><p>$149</p><ul><li>All Basic Features</li><li>Sleep Analysis</li><li>Music Control</li><li>Custom Watch Faces</li></ul><button>Select</button></div>
+      <div class="plan"><h4>Premium</h4><p>$199</p><ul><li>All Standard Features</li><li>Built-in GPS</li><li>10-Day Battery</li><li>Advanced Health Metrics</li></ul><button>Select</button></div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <h3>What Our Customers Say</h3>
+    <div class="testimonial-list">
+      <div class="testimonial"><p>“The GPS and battery life are game-changers for my marathon training!”</p><h4>- Priya Sharma</h4></div>
+      <div class="testimonial"><p>“Custom watch faces and sleep tracking make this my favorite gadget.”</p><h4>- Rahul Mehta</h4></div>
+      <div class="testimonial"><p>“Stylish, waterproof, and packed with features. Absolutely love it!”</p><h4>- Ananya Kapoor</h4></div>
+      <div class="testimonial"><p>“Smart notifications keep me connected without my phone.”</p><h4>- Vikram Singh</h4></div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta">
+    <h3>Ready to revolutionize your fitness journey?</h3>
+    <button id="order-now">Order Now</button>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>Contact us at <a href="mailto:info@smartwatch.com" style="color: #ffcc00; text-decoration: none;">info@smartwatch.com</a></p>
+    <div class="socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p>© Ekansh Ahalawat 2025 Smart Watch Pro. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Navbar background change on scroll
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('navbar');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.innerHTML = navLinks.classList.contains('active') ? '✖' : '☰';
+    });
+
+    // Buy Now and Order Now buttons redirect to pricing section
+    const buyNowButton = document.getElementById('buy-now');
+    const orderNowButton = document.getElementById('order-now');
+    
+    buyNowButton.addEventListener('click', () => {
+      const pricingSection = document.getElementById('pricing');
+      window.scrollTo({
+        top: pricingSection.offsetTop - 80,
+        behavior: 'smooth'
+      });
+      if (navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        menuToggle.innerHTML = '☰';
+      }
+    });
+
+    orderNowButton.addEventListener('click', () => {
+      const pricingSection = document.getElementById('pricing');
+      window.scrollTo({
+        top: pricingSection.offsetTop - 80,
+        behavior: 'smooth'
+      });
+      if (navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        menuToggle.innerHTML = '☰';
+      }
+    });
+
+    // Color selector functionality
+    const colorOptions = document.querySelectorAll('.color-option');
+    const watchImage = document.getElementById('watch-image');
+
+    colorOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        colorOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        watchImage.src = option.dataset.color;
+        watchImage.style.opacity = 0;
+        setTimeout(() => {
+          watchImage.style.opacity = 1;
+        }, 300);
+      });
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+        if (navLinks.classList.contains('active')) {
+          navLinks.classList.remove('active');
+          menuToggle.innerHTML = '☰';
+        }
+      });
+    });
+
+    // FAQ toggle functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('p').style.display = 'none';
+        });
+        if (!isActive) {
+          item.classList.add('active');
+          item.querySelector('p').style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
